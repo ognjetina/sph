@@ -24,3 +24,24 @@ sph ()
     echo ' - spj <project name>	- jumps to project in Workspace';
     echo ' - spes			- starts virtual enviroment if you are in root folder of your project(and so is the env)'
 }
+
+
+# alias for android virutal device
+alias shakedevice='adb shell input keyevent 82'
+alias reversedevice='adb reverse tcp:8081 tcp:8081'
+
+# start andorid virtual device
+function va {
+echo '-->  Type va -l (to list devices)'
+echo '-->  Type va -avd <deviceName> (to start emulator)'
+echo '---> Piping your command to emulator:'
+if test "$1" == "-l"
+then
+        cd ~/Library/Android/sdk/emulator && ./emulator -list-avds
+else
+        if test "$1" == "-avd"
+        then
+        cd ~/Library/Android/sdk/emulator && ./emulator "$1" "$2"
+        fi
+fi
+}
