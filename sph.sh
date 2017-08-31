@@ -31,9 +31,12 @@ alias shakedevice='adb shell input keyevent 82'
 alias reversedevice='adb reverse tcp:8081 tcp:8081'
 
 function device {
-echo '-->  Type device -s To shake the device'
-echo '-->  Type device -r To reverse device TCP 8081'
-echo '---> Type device -c <app-name> To clear dev app data'
+if [ $# -eq 0 ]
+  then
+    echo '-->  Type device -s To shake the device'
+    echo '-->  Type device -r To reverse device TCP 8081'
+    echo '---> Type device -c <app-name> To clear dev app data'
+fi
 if test "$1" == "-s"
 then
         adb shell input keyevent 82
@@ -55,9 +58,11 @@ fi
 
 # start andorid virtual device
 function va {
+if [ $# -eq 0 ]
+  then
 echo '-->  Type va -l (to list devices)'
 echo '-->  Type va -avd <deviceName> (to start emulator)'
-echo '---> Piping your command to emulator:'
+fi
 if test "$1" == "-l"
 then
         cd ~/Library/Android/sdk/emulator && ./emulator -list-avds
