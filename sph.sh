@@ -74,10 +74,18 @@ else
 fi
 }
 
-#pull screenshot from phone
-function ssandroid {
-    adb shell screencap -p /sdcard/screen.png
-    adb pull /sdcard/screen.png
-    adb shell rm /sdcard/screen.png
-    mv screen.png ~/Desktop
+#pull screenshot from phone and give it a name as parametar or use default
+function ssandroid () {
+     
+    SCREENSHOT_NAME="$1"
+    if [ -z "$SCREENSHOT_NAME" ]
+    then
+        echo “No name provided screenshot will be named screen.png“
+	SCREENSHOT_NAME=screen.png
+    fi
+
+    adb shell screencap -p /sdcard/"${SCREENSHOT_NAME}".png
+    adb pull /sdcard/"${SCREENSHOT_NAME}".png
+    adb shell rm /sdcard/"${SCREENSHOT_NAME}".png
+    mv "${SCREENSHOT_NAME}".png ~/Desktop
 }
