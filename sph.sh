@@ -56,21 +56,26 @@ else
 fi
 }
 
-# start andorid virtual device
+# start android or iOS virtual device
 function va {
-if [ $# -eq 0 ]
-  then
-echo '-->  Type va -l (to list devices)'
-echo '-->  Type va -avd <deviceName> (to start emulator)'
-fi
+echo '-->  Type va -l (to list devices android and iOS)'
+echo '-->  Type va -a <deviceName> (to start ANDROID) example: va -a Android_4.1'
+echo '-->  Type va -I <deviceName> (to start IOS) example: va -i “iPhone 8 (11.2) [BD876937-82DD-4F08-8F8E-B1FC18DDD091]”'
+echo '---> Piping your command to emulator:'
 if test "$1" == "-l"
 then
-        cd ~/Library/Android/sdk/emulator && ./emulator -list-avds
+	startingPoint=$(pwd)
+	cd ~/Library/Android/sdk/emulator && ./emulator -list-avds
+	xcrun instruments -s devices | grep "iPhone"
+	cd $startingPoint
 else
-        if test "$1" == "-avd"
-        then
-        cd ~/Library/Android/sdk/emulator && ./emulator "$1" "$2"
-        fi
+	if test "$1" == "-a"
+	then
+	cd ~/Library/Android/sdk/emulator && ./emulator -avd "$2"
+	elif test "$1" == "-i"
+	then
+	xcrun instruments -w "$2"
+	fi
 fi
 }
 
